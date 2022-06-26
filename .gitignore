@@ -1,0 +1,7 @@
+.terraform
+pets.txt
+terraform.tfstate
+terraform.tfstate.backup
+digital-ocean/variables.tf
+.ssh
+ssh.sh
