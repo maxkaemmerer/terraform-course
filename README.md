@@ -3,6 +3,13 @@
 * `terraform init` initializes terraform files and downloads the providers required by the configuration files in the current directory
 * `terraform plan` shows us what the changes made will be when we `apply` the current config, `terraform plan -out some-plan` creates plan file that can be applied and that prevents changes that happen between `plan`and `apply` to be applied.
 * `terraform apply` applies the changes required by to move from the current state to the state described in the config files
+* `terraform validate` validate config files. This fives good hints as to what might be wrong with the config.
+* `terraform fmt` format the config file.
+* `terraform show` shows applied resources and their output.
+* `terraform providers` list all providers used.
+* `terraform output` print all outputs of the current config files.
+* `terraform refresh` refreshes local state but not external infrastructure.
+* `terraform graph | dot -Tsvg > graph.svg` creates a graph of the current config using graphviz.
 
 
 ## Variables

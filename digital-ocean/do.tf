@@ -25,21 +25,21 @@ resource "digitalocean_ssh_key" "sshkey" {
   public_key = data.tls_public_key.publickey.public_key_openssh
 }
 
-resource local_file "local_public_ssh_key" {
-  filename = "${path.module}/.ssh/terraform-do.pub"
-  content = data.tls_public_key.publickey.public_key_openssh
+resource "local_file" "local_public_ssh_key" {
+  filename        = "${path.module}/.ssh/terraform-do.pub"
+  content         = data.tls_public_key.publickey.public_key_openssh
   file_permission = 0600
 }
 
-resource local_file "local_private_ssh_key" {
-  filename = "${path.module}/.ssh/terraform-do"
-  content = tls_private_key.privatekey.private_key_openssh
+resource "local_file" "local_private_ssh_key" {
+  filename        = "${path.module}/.ssh/terraform-do"
+  content         = tls_private_key.privatekey.private_key_openssh
   file_permission = 0600
 }
 
-resource local_file "ssh_bash" {
-  filename = "${path.module}/.ssh/ssh.sh"
-  content = "ssh root@${digitalocean_droplet.node0001[0].ipv4_address} -i ${path.module}/.ssh/terraform-do"
+resource "local_file" "ssh_bash" {
+  filename        = "${path.module}/.ssh/ssh.sh"
+  content         = "ssh root@${digitalocean_droplet.node0001[0].ipv4_address} -i ${path.module}/.ssh/terraform-do"
   file_permission = 0600
 }
 
