@@ -15,6 +15,10 @@ Variables can be created in multiple ways, if multiple sources are present the t
 If the variable does not have a default value you will be prompted for it. Adding the sensitive=true flag to the variable ensures that the entered input is not visible.
 
 
+## State
+State contains all the details of the created infrastructure at the last time it was refreshed. (apply and plan refresh the state)
+State is kept in `terraform.tfstate`. This file should not be committed to git since it may contain sensitive information. Every developer using Terraform should however als have the most up-to-date version of the file. Commons ways to still share this state are AWS S3, Google Cloud Storage, HashiCorp Consul and Terraform Cloud.
+
 ## Digital Ocean
 Get Images
 ````shell
