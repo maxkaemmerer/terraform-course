@@ -25,5 +25,5 @@ variable "terraform_admin_name" {
 variable "arn" {
   type = string
   sensitive = true
-  default = "" # arn:aws:iam::123456789011:user/user-name
+  default = "" # like "arn:aws:iam::123456789011:user/user-name". user-name is the same as the terraform_admin_name variable. 123456789011 is the same as account_id
 }
