@@ -1,5 +1,6 @@
 .terraform
 pets.txt
+cats.txt
 terraform.tfstate
 terraform.tfstate.backup
 digital-ocean/variables.tf

@@ -38,31 +38,41 @@ resource "local_file" "local_private_ssh_key" {
 }
 
 resource "local_file" "ssh_bash" {
-  filename        = "${path.module}/.ssh/ssh.sh"
-  content         = "ssh root@${digitalocean_droplet.node0001[0].ipv4_address} -i ${path.module}/.ssh/terraform-do"
+  filename        = "${path.module}/.ssh/ssh-${each.key}.sh"
+  content         = "ssh root@${each.value.ipv4_address} -i ${path.module}/.ssh/terraform-do"
   file_permission = 0600
+  for_each = digitalocean_droplet.basic_node
 }
 
-resource "digitalocean_volume" "volume0001" {
+resource "digitalocean_volume" "volume" {
   region                  = "fra1"
-  name                    = "volume0001"
+  name                    = "volume-${each.key}"
   size                    = 1
   initial_filesystem_type = "ext4"
   description             = "an example volume"
+
+  for_each = digitalocean_droplet.basic_node
 }
 
-resource "digitalocean_droplet" "node0001" {
+variable "nodes" {
+  type = set(string)
+  default = [ "001", "002", "003" ]
+}
+
+resource "digitalocean_droplet" "basic_node" {
   image    = "ubuntu-20-04-x64"
-  name     = "node0001"
+  name     = "basic-node-${each.value}"
   region   = "fra1"
   size     = "s-1vcpu-1gb"
-  count    = 1
+  for_each = var.nodes
   ssh_keys = [digitalocean_ssh_key.sshkey.id]
 }
 
 resource "digitalocean_volume_attachment" "volumeattachment0001" {
-  droplet_id = digitalocean_droplet.node0001[0].id
-  volume_id  = digitalocean_volume.volume0001.id
+  droplet_id = digitalocean_droplet.basic_node[each.key].id
+  volume_id  = each.value.id
+
+  for_each = digitalocean_volume.volume
 }
 
 resource "digitalocean_project" "terraform_test_project" {
@@ -70,5 +80,5 @@ resource "digitalocean_project" "terraform_test_project" {
   description = "A project to test terraform infrastructure deployment."
   purpose     = "Testing"
   environment = "Development"
-  resources   = [digitalocean_volume.volume0001.urn, digitalocean_droplet.node0001[0].urn]
+  resources   = concat([ for node in digitalocean_droplet.basic_node: node.urn ], [ for volume in digitalocean_volume.volume: volume.urn ])
 }
