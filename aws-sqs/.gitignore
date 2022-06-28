@@ -1,0 +1,8 @@
+credentials
+queue_url
+variables.tf
+producer/node_modules
+terraform.tfstate
+terraform.tfstate.backup
+.terraform.tfstate.lock.info
+queue_url.txt

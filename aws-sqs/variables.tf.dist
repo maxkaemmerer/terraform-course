@@ -1,0 +1,29 @@
+variable "access_key" {
+  type = string
+  sensitive = true
+  default = "" # 20 character string of uppercase letters and numbers
+}
+
+variable "secret" {
+  type = string
+  sensitive = true
+  default = ""
+}
+
+variable "account_id" {
+  type = string
+  sensitive = true
+  default = "" # 12 digit number of the aws root account
+}
+
+variable "terraform_admin_name" {
+  type = string
+  sensitive = true
+  default = ""
+}
+
+variable "arn" {
+  type = string
+  sensitive = true
+  default = "" # arn:aws:iam::123456789011:user/user-name
+}

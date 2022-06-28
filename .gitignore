@@ -3,6 +3,9 @@ pets.txt
 cats.txt
 terraform.tfstate
 terraform.tfstate.backup
+.terraform.tfstate.lock.info
 digital-ocean/variables.tf
+aws-sqs/variables.tf
 .ssh
 ssh.sh
+credentials
